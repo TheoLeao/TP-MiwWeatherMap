@@ -22,12 +22,23 @@ hiddenInput = document.getElementById(document.querySelector('#inputAdresse').ge
 //Ecouteurs d'evenements
 document.querySelector('#inputAdresse').addEventListener('input', function () { autocompletionInput(inputAdresse, datalistInputAdresse, zoneAlert, 'https://nominatim.openstreetmap.org/search', { 'street': inputAdresse.value, 'country': 'France', format : 'json'}) })
 document.querySelector('#inputAdresse').addEventListener('change', function (){
-    console.log(hiddenInput.value);
-
-    //console.log(coordonnees);
+    tabCoordonnees = hiddenInput.value.split(',');
+    lon = parseFloat(tabCoordonnees[0]);
+    lat = parseFloat(tabCoordonnees[1]);
+    //Affichage de la carte
+    //Affichage de la carte
+    let mymap = L.map('map').setView([lon, lat], 13);
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 12,
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1,
+        accessToken: 'pk.eyJ1IjoidGhlb2xlYW8iLCJhIjoiY2tpZG91MDJzMWw2MDJ4bzVianp6cXBsaCJ9.ps_BFy88xj0l6kMkf9ivgA'
+    }).addTo(mymap);
 })
+//Stocker la valeur de l'option selectionné dans la hiddenInput pour la recuperer au input
 document.querySelector('input[list]').addEventListener('input', function(e) {
-    console.log('ok');
     var input = e.target,
         list = input.getAttribute('list'),
         options = document.querySelectorAll('#' + list + ' option'),
@@ -58,7 +69,7 @@ function autocompletionInput(nodeInput, nodeDatalist, nodeAlert, urlReq, paramsR
                 //Convertir la réponse text en JSON
                 data = JSON.parse(req.responseText);
 
-                console.log(data)
+                //console.log(data)
                 //Création des options dans datalist
                 for (i = 0; i < data.length; i++) {
                     //Creer l'element option
