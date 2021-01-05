@@ -17,10 +17,35 @@ var inputAdresse = document.querySelector('#inputAdresse');
 var datalistInputAdresse = document.querySelector('#datalistInputAdresse');
 var zoneAlert = document.getElementsByClassName('zoneAlert')[0];
 let zoneAffichageCarte = document.getElementById('map');
-
+hiddenInput = document.getElementById(document.querySelector('#inputAdresse').getAttribute('id') + '-hidden'),
 
 //Ecouteurs d'evenements
 document.querySelector('#inputAdresse').addEventListener('input', function () { autocompletionInput(inputAdresse, datalistInputAdresse, zoneAlert, 'https://nominatim.openstreetmap.org/search', { 'street': inputAdresse.value, 'country': 'France', format : 'json'}) })
+document.querySelector('#inputAdresse').addEventListener('change', function (){
+    console.log(hiddenInput.value);
+
+    //console.log(coordonnees);
+})
+document.querySelector('input[list]').addEventListener('input', function(e) {
+    console.log('ok');
+    var input = e.target,
+        list = input.getAttribute('list'),
+        options = document.querySelectorAll('#' + list + ' option'),
+        hiddenInput = document.getElementById(input.getAttribute('id') + '-hidden'),
+        inputValue = input.value;
+
+    hiddenInput.value = inputValue;
+
+    for(var i = 0; i < options.length; i++) {
+        var option = options[i];
+
+        if(option.innerText === inputValue) {
+            hiddenInput.value = option.getAttribute('data-value');
+            break;
+        }
+    }
+});
+
 function autocompletionInput(nodeInput, nodeDatalist, nodeAlert, urlReq, paramsReq,) {
     //Vider la zone d'alert
     nodeAlert.innerHTML = '';
@@ -40,9 +65,13 @@ function autocompletionInput(nodeInput, nodeDatalist, nodeAlert, urlReq, paramsR
                     let option = document.createElement('option');
                     //Récupérer le nom de la ville
                     let villeNom = data[i].display_name;
+                    let lat = data[i].lat;
+                    let lon = data[i].lon;
                     console.log(villeNom);
-                    //Ajouter le noeud attribut
-                    option.setAttribute('value', villeNom);
+                    //Ajouter le nom de la ville en value
+                    option.setAttribute('data-value', data[i].lat + ',' + data[i].lon);
+                    //Ajouter les cordonnées en noeud text
+                    option.append(villeNom);
                     nodeDatalist.append(option)
                 }
             })
