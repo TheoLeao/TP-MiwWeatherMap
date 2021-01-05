@@ -402,6 +402,10 @@ section {
   margin-top: 30px;
 }
 
+#map {
+  height: 500px;
+}
+
 .container {
   width: 85vw;
 }
