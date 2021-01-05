@@ -1,6 +1,4 @@
-
-/* Affichage de la carte
-let mymap = L.map('map').setView([46.227638,2.213749], 13);
+/*let mymap = L.map('map').setView([46.227638,2.213749], 13);
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 6,
@@ -10,6 +8,7 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
     accessToken: 'pk.eyJ1IjoidGhlb2xlYW8iLCJhIjoiY2tpZG91MDJzMWw2MDJ4bzVianp6cXBsaCJ9.ps_BFy88xj0l6kMkf9ivgA'
 }).addTo(mymap);
 */
+
 
 //https://nominatim.openstreetmap.org/search?q=17+Strada+Pictor+Alexandru+Romano%2C+Bukarest&format=geojson
 
@@ -21,8 +20,7 @@ let zoneAffichageCarte = document.getElementById('map');
 
 
 //Ecouteurs d'evenements
-document.querySelector('#inputAdresse').addEventListener('input', function () { autocompletionInput(inputAdresse, datalistInputAdresse, zoneAlert, 'https://nominatim.openstreetmap.org/search', { 'q': inputAdresse.value, 'format' : 'geojson', 'country' : 'France'}) })
-
+document.querySelector('#inputAdresse').addEventListener('input', function () { autocompletionInput(inputAdresse, datalistInputAdresse, zoneAlert, 'https://nominatim.openstreetmap.org/search', { 'street': inputAdresse.value, 'country': 'France', format : 'json'}) })
 function autocompletionInput(nodeInput, nodeDatalist, nodeAlert, urlReq, paramsReq,) {
     //Vider la zone d'alert
     nodeAlert.innerHTML = '';
@@ -37,11 +35,11 @@ function autocompletionInput(nodeInput, nodeDatalist, nodeAlert, urlReq, paramsR
 
                 console.log(data)
                 //Création des options dans datalist
-                for (i = 0; i < data.features.length; i++) {
+                for (i = 0; i < data.length; i++) {
                     //Creer l'element option
                     let option = document.createElement('option');
                     //Récupérer le nom de la ville
-                    let villeNom = data.features[i].properties.display_name;
+                    let villeNom = data[i].display_name;
                     console.log(villeNom);
                     //Ajouter le noeud attribut
                     option.setAttribute('value', villeNom);
