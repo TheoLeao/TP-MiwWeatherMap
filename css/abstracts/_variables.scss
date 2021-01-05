@@ -1,0 +1,31 @@
+//Variables tailles
+$navbar_height: 60px;
+$margin-constraint-width: calc(100vw - 40px);
+$useful-width: map-get($breakpoints, "XL");
+$marginBottom-section: 40px;
+
+//Taille polices
+/* -- Desktop --*/
+$sizeTitle: 22px;
+$sizeSubTitle: 20px;
+$sizeTextCTA: 18px;
+$sizeText:17px;
+$sizeTextParagraph:14px;
+$sizeTextAdditionnal:12px;
+/* --Mobile--*/
+$sizeLienMenu--mobile: 22px;
+$sizeTitle--mobile: 22px;
+$sizeSubTitle--mobile: 18px;
+$sizeTextCTA--mobile: 15px;
+$sizeText--mobile:14px;
+$sizeTextAdditionnal--mobile:13px;
+/* --Epaisseur police --*/
+$thin: 100;
+$extra-ligth: 200;
+$ligth: 300;
+$regular: 400;
+$medium: 500;
+$semi-bold: 600;
+$bold: 700;
+$extra-bold: 800;
+$black: 900;
