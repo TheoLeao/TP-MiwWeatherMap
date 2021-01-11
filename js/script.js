@@ -110,29 +110,47 @@ function autocompletionInput(nodeInput, nodeDatalist, nodeAlert, urlReq, paramsR
 }
 
 
-function getRefreshToken_NetatmoApi(){
+function getAccessToken_NetatmoApi() {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-    
+
     var urlencoded = new URLSearchParams();
     urlencoded.append("grant_type", "refresh_token");
     urlencoded.append("refresh_token", "5ffc5befccb0da524b20861c|20832aa7e0dfa5873598919b947e62a1");
     urlencoded.append("client_id", "5ffc5c2cbd10c6698151b1cf");
     urlencoded.append("client_secret", "NfDkkPDA6qEiQ25HwOHqsIvsOCybFhL5GgBOTF8");
-    
+
     var requestOptions = {
         method: 'POST',
         headers: myHeaders,
         body: urlencoded,
         redirect: 'follow'
     };
-    
+
     fetch("https://api.netatmo.com/oauth2/token", requestOptions)
         .then(response => response.text())
-        .then(result => console.log(JSON.parse(result).refresh_token))
+        .then(result => console.log(JSON.parse(result).access_token))
         .catch(error => console.log('error', error));
 }
-console.log(getRefreshToken_NetatmoApi())
+function getStations(lat_NE, lon_NE, lat_SW, lon_SW) {
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer 5ffc5befccb0da524b20861c|f9055d4e55d4901c71893c23b1a4e1e7");
+    
+    var urlencoded = new URLSearchParams();
+    
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: urlencoded,
+      redirect: 'follow'
+    };
+    
+    fetch("https://api.netatmo.com/api/getpublicdata?lat_ne=48.5833&lon_ne=7.75&lat_sw=44.8333&lon_sw=-0.5667&filter=false", requestOptions)
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+}
+
 function showStations(urlReq, paramsReq) {
     $get(urlReq, paramsReq)
         .then((req) => {
@@ -154,4 +172,8 @@ function showStations(urlReq, paramsReq) {
         </div>`;
         });
 }
+//console.log(getStations(48.5833, 7.75, 44.8333, 0.5667));
+accessToken = getAccessToken_NetatmoApi();
+//console.log(accessToken)
 showStations();
+getStations();
