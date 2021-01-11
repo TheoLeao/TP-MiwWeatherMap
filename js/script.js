@@ -19,9 +19,9 @@ var zoneAlert = document.getElementsByClassName('zoneAlert')[0];
 let zoneAffichageCarte = document.getElementById('map');
 hiddenInput = document.getElementById(document.querySelector('#inputAdresse').getAttribute('id') + '-hidden'),
 
-//Ecouteurs d'evenements
-document.querySelector('#inputAdresse').addEventListener('input', function () { autocompletionInput(inputAdresse, datalistInputAdresse, zoneAlert, 'https://nominatim.openstreetmap.org/search', { 'street': inputAdresse.value, 'country': 'France', format : 'json'}) })
-document.querySelector('#inputAdresse').addEventListener('change', function (){
+    //Ecouteurs d'evenements
+    document.querySelector('#inputAdresse').addEventListener('input', function () { autocompletionInput(inputAdresse, datalistInputAdresse, zoneAlert, 'https://nominatim.openstreetmap.org/search', { 'street': inputAdresse.value, 'country': 'France', format: 'json' }) })
+document.querySelector('#inputAdresse').addEventListener('change', function () {
     tabCoordonnees = hiddenInput.value.split(',');
     lon = parseFloat(tabCoordonnees[0]);
     lat = parseFloat(tabCoordonnees[1]);
@@ -38,7 +38,7 @@ document.querySelector('#inputAdresse').addEventListener('change', function (){
     }).addTo(mymap);
 })
 //Stocker la valeur de l'option selectionné dans la hiddenInput pour la recuperer au input
-document.querySelector('input[list]').addEventListener('input', function(e) {
+document.querySelector('input[list]').addEventListener('input', function (e) {
     var input = e.target,
         list = input.getAttribute('list'),
         options = document.querySelectorAll('#' + list + ' option'),
@@ -47,10 +47,10 @@ document.querySelector('input[list]').addEventListener('input', function(e) {
 
     hiddenInput.value = inputValue;
 
-    for(var i = 0; i < options.length; i++) {
+    for (var i = 0; i < options.length; i++) {
         var option = options[i];
 
-        if(option.innerText === inputValue) {
+        if (option.innerText === inputValue) {
             hiddenInput.value = option.getAttribute('data-value');
             break;
         }
@@ -105,6 +105,53 @@ function autocompletionInput(nodeInput, nodeDatalist, nodeAlert, urlReq, paramsR
                     Les villes s'afficheront uniquement à partir de 3 caractères.
                 </div>`;
     }
-   console.log('ok')
+    console.log('ok')
 
 }
+
+
+function getRefreshToken_NetatmoApi(){
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+    
+    var urlencoded = new URLSearchParams();
+    urlencoded.append("grant_type", "refresh_token");
+    urlencoded.append("refresh_token", "5ffc5befccb0da524b20861c|20832aa7e0dfa5873598919b947e62a1");
+    urlencoded.append("client_id", "5ffc5c2cbd10c6698151b1cf");
+    urlencoded.append("client_secret", "NfDkkPDA6qEiQ25HwOHqsIvsOCybFhL5GgBOTF8");
+    
+    var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: urlencoded,
+        redirect: 'follow'
+    };
+    
+    fetch("https://api.netatmo.com/oauth2/token", requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(JSON.parse(result).refresh_token))
+        .catch(error => console.log('error', error));
+}
+console.log(getRefreshToken_NetatmoApi())
+function showStations(urlReq, paramsReq) {
+    $get(urlReq, paramsReq)
+        .then((req) => {
+            //Convertir la réponse text en JSON
+            data = JSON.parse(req.responseText);
+            console.log(data)
+            //Afficher les bornes
+            for (i = 0; i < data.length; i++) {
+
+            }
+        })
+        .catch((req) => {
+            //Affichage de l'erreur récupération BDD
+            document.getElementsByClassName('zoneAlert')[0].innerHTML = '';
+            //Afficher le message d'erreur
+            document.getElementsByClassName('zoneAlert')[0].innerHTML += `
+        <div class="alert alert-danger" role="alert">
+            L'affichage des bornes météos netatmo est indisponible.
+        </div>`;
+        });
+}
+showStations();
