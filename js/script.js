@@ -145,7 +145,7 @@ function getStations(lat_NE, lon_NE, lat_SW, lon_SW) {
       redirect: 'follow'
     };
     
-    fetch("https://api.netatmo.com/api/getpublicdata?lat_ne=48.5833&lon_ne=7.75&lat_sw=44.8333&lon_sw=-0.5667&filter=false", requestOptions)
+    fetch(`https://api.netatmo.com/api/getpublicdata?lat_ne=${lat_NE}&lon_ne=${lon_NE}&lat_sw=${lat_SW}&lon_sw=${lon_SW}&filter=false`, requestOptions)
       .then(response => response.text())
       .then(result => console.log(result))
       .catch(error => console.log('error', error));
@@ -156,7 +156,7 @@ function showStations(urlReq, paramsReq) {
         .then((req) => {
             //Convertir la réponse text en JSON
             data = JSON.parse(req.responseText);
-            console.log(data)
+            console.log(data);
             //Afficher les bornes
             for (i = 0; i < data.length; i++) {
 
@@ -172,7 +172,7 @@ function showStations(urlReq, paramsReq) {
         </div>`;
         });
 }
-//console.log(getStations(48.5833, 7.75, 44.8333, 0.5667));
+getStations(48.5833, 7.75, 44.8333, -0.5667);
 accessToken = getAccessToken_NetatmoApi();
 //console.log(accessToken)
 showStations();
