@@ -19,6 +19,7 @@ var zoneAlert = document.getElementsByClassName('zoneAlert')[0];
 let zoneAffichageCarte = document.getElementById('map');
 hiddenInput = document.getElementById(document.querySelector('#inputAdresse').getAttribute('id') + '-hidden'),
 
+
     //Ecouteurs d'evenements
     document.querySelector('#inputAdresse').addEventListener('input', function () { autocompletionInput(inputAdresse, datalistInputAdresse, zoneAlert, 'https://nominatim.openstreetmap.org/search', { 'street': inputAdresse.value, 'country': 'France', format: 'json' }) })
 document.querySelector('#inputAdresse').addEventListener('change', function () {
@@ -26,7 +27,8 @@ document.querySelector('#inputAdresse').addEventListener('change', function () {
     lon = parseFloat(tabCoordonnees[0]);
     lat = parseFloat(tabCoordonnees[1]);
     //Affichage de la carte
-    let mymap = L.map('map').setView([lon, lat], 13);
+
+    let mymap = L.map('map', {zoomControl: true}).setView([lon, lat], 13);
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
         maxZoom: 12,
@@ -105,7 +107,6 @@ function autocompletionInput(nodeInput, nodeDatalist, nodeAlert, urlReq, paramsR
                 </div>`;
     }
     console.log('ok')
-
 }
 
 
