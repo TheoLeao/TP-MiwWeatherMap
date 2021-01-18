@@ -26,11 +26,22 @@ document.querySelector('#inputAdresse').addEventListener('change', function () {
     tabCoordonnees = hiddenInput.value.split(',');
     lon = parseFloat(tabCoordonnees[0]);
     lat = parseFloat(tabCoordonnees[1]);
+    //Afficher la carte
     showMap(lon, lat);
+
+    //Récuperer les extrémités de la carte
     NE_lat = mymap.getBounds()._northEast.lat;
     NE_lng = mymap.getBounds()._northEast.lng;
     SW_lat = mymap.getBounds()._southWest.lat;
     SW_lng = mymap.getBounds()._southWest.lng;
+
+    //Dessiner la diagonale pour vérifier si les valeurs sont correct
+    var polygon = L.polygon([
+        [NE_lat, NE_lng],
+        [SW_lat, SW_lng]
+    ]).addTo(mymap);
+
+
     console.log(mymap.getBounds())
     console.log('NE_lat: ' + NE_lat + 'NE_lng: ' + NE_lng + 'SW_lat: ' + SW_lat + 'SW_lng: ' + SW_lng);
 
