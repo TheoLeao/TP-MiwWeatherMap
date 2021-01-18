@@ -79,9 +79,9 @@ function autocompletionInput(nodeInput, nodeDatalist, nodeAlert, urlReq, paramsR
             })
             .catch((req) => {
                 //Affichage de l'erreur récupération BDD
-                document.getElementsByClassName('zoneAlert')[0].innerHTML = '';
+                zoneAlert.innerHTML = '';
                 //Afficher le message d'erreur
-                document.getElementsByClassName('zoneAlert')[0].innerHTML += `
+                zoneAlert.innerHTML += `
                 <div class="alert alert-danger" role="alert">
                     Suite à un soucis technique l'autocomplétion n'est pas disponible. Veuillez entrer le nom de la ville puis de valider.
                 </div>`;
