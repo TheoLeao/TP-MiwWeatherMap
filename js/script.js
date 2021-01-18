@@ -2,7 +2,7 @@ function cl(message) {
     return console.log(message);
 }
 
-_id = function(id){return document.getElementById(id);};
+_id = function (id) { return document.getElementById(id); };
 
 
 //https://nominatim.openstreetmap.org/search?q=17+Strada+Pictor+Alexandru+Romano%2C+Bukarest&format=geojson
@@ -27,7 +27,7 @@ document.querySelector('#inputAdresse').addEventListener('change', function () {
     lon = parseFloat(tabCoordonnees[0]);
     lat = parseFloat(tabCoordonnees[1]);
     showMap(lon, lat);
-    showStations(48.5833, 7.75, 44.8333, -0.5667);
+    showStations(37.6181, 15.8100, 35.8077, 13.5514);
 })
 //Stocker la valeur de l'option selectionné dans la hiddenInput pour la recuperer au input
 document.querySelector('input[list]').addEventListener('input', function (e) {
@@ -172,17 +172,15 @@ function showStations(lat_NE, lon_NE, lat_SW, lon_SW) {
                     //Exemple récupération coordonnées d'une borne
                     lat = data.body[0].place.location[0];
                     lon = data.body[0].place.location[1];
+                    console.log(lat);
+                    console.log(lon)
 
-                    //Faire une boucle et afficher chaque bornes sur la map grâce à lat et lon
+                    for (let i = 0; i < data.body.length; i++) {
 
-                    for (let i=0; i < data.body.length; i++){
+                        lat = data.body[i].place.location[0];
+                        lon = data.body[i].place.location[1];
 
-                        dataBorne_2 = data.body[i];
-
-                        lat = dataBorne_2.measures[Object.keys(dataBorne_2.measures)[0]].res[Object.keys(dataBorne_2.measures[Object.keys(dataBorne_2.measures)[0]].res)[0]];
-                        lon = dataBorne_2.measures[Object.keys(dataBorne_2.measures)[0]].res[Object.keys(dataBorne_2.measures[Object.keys(dataBorne_2.measures)[0]].res)[0]];
-
-                        L.marker([lat[1], lon[0]]).addTo(mymap); //Ajout du marqueur
+                        L.marker([lon, lat]).addTo(mymap); //Ajout du marqueur
 
                     }
 
@@ -198,24 +196,24 @@ function showStations(lat_NE, lon_NE, lat_SW, lon_SW) {
 
 function showMap(lon, lat) {
 
-        //Je supprime la carte précendente
-        let main = _id('main-container');
-        main.removeChild(_id('map'));
+    //Je supprime la carte précendente
+    let main = _id('main-container');
+    main.removeChild(_id('map'));
 
-        //Et en créé une nouvelle carte avec les informations mises a jour
-        let map = document.createElement('div');
-        map.setAttribute('id', 'map');
-        main.appendChild(map);
+    //Et en créé une nouvelle carte avec les informations mises a jour
+    let map = document.createElement('div');
+    map.setAttribute('id', 'map');
+    main.appendChild(map);
 
-        //Affichage de la carte
-        mymap = L.map('map', { zoomControl: true }).setView([lon, lat], 13);
-        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-            maxZoom: 12,
-            id: 'mapbox/streets-v11',
-            tileSize: 512,
-            zoomOffset: -1,
-            accessToken: 'pk.eyJ1IjoidGhlb2xlYW8iLCJhIjoiY2tpZG91MDJzMWw2MDJ4bzVianp6cXBsaCJ9.ps_BFy88xj0l6kMkf9ivgA'
-        }).addTo(mymap);
+    //Affichage de la carte
+    mymap = L.map('map', { zoomControl: true }).setView([lon, lat], 13);
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 12,
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1,
+        accessToken: 'pk.eyJ1IjoidGhlb2xlYW8iLCJhIjoiY2tpZG91MDJzMWw2MDJ4bzVianp6cXBsaCJ9.ps_BFy88xj0l6kMkf9ivgA'
+    }).addTo(mymap);
 }
 //alert('test');
