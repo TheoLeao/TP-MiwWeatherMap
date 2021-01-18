@@ -27,7 +27,15 @@ document.querySelector('#inputAdresse').addEventListener('change', function () {
     lon = parseFloat(tabCoordonnees[0]);
     lat = parseFloat(tabCoordonnees[1]);
     showMap(lon, lat);
-    showStations(37.6181, 15.8100, 35.8077, 13.5514);
+    NE_lat = mymap.getBounds()._northEast.lat;
+    NE_lng = mymap.getBounds()._northEast.lng;
+    SW_lat = mymap.getBounds()._southWest.lat;
+    SW_lng = mymap.getBounds()._southWest.lng;
+    console.log(mymap.getBounds())
+    console.log('NE_lat: '+NE_lat+'NE_lng: '+NE_lng+'SW_lat: '+SW_lat+'SW_lng: '+SW_lng);
+
+    showStations(NE_lat, NE_lng, SW_lat, SW_lng);
+
 })
 //Stocker la valeur de l'option selectionné dans la hiddenInput pour la recuperer au input
 document.querySelector('input[list]').addEventListener('input', function (e) {
@@ -127,7 +135,7 @@ function getAccessToken_NetatmoApi() {
         .catch(error => console.log('error', error));
 }*/
 
-function showStations(lat_NE, lon_NE, lat_SW, lon_SW) {
+function showStations(NE_lat, NE_lng, SW_lat, SW_lng) {
     //Récupération du refresh_token
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
@@ -165,16 +173,16 @@ function showStations(lat_NE, lon_NE, lat_SW, lon_SW) {
             };
 
             //Récupération des données NetATMO
-            fetch(`https://api.netatmo.com/api/getpublicdata?lat_ne=${lat_NE}&lon_ne=${lon_NE}&lat_sw=${lat_SW}&lon_sw=${lon_SW}&filter=false`, requestOptions)
+            fetch(`https://api.netatmo.com/api/getpublicdata?lat_ne=${NE_lat}&lon_ne=${NE_lng}&lat_sw=${SW_lat}&lon_sw=${SW_lng}&filter=false`, requestOptions)
                 .then(response => response.text())
                 .then(result => {
                     data = JSON.parse(result)
                     //Exemple récupération coordonnées d'une borne
                     lat = data.body[0].place.location[0];
                     lon = data.body[0].place.location[1];
-                    console.log(lat);
-                    console.log(lon)
-
+                    //console.log(lat);
+                    //console.log(lon)
+                    console.log(data.body[0].place)
                     for (let i = 0; i < data.body.length; i++) {
 
                         lat = data.body[i].place.location[0];
@@ -209,7 +217,7 @@ function showMap(lon, lat) {
     mymap = L.map('map', { zoomControl: true }).setView([lon, lat], 13);
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        maxZoom: 12,
+        maxZoom: 8,
         id: 'mapbox/streets-v11',
         tileSize: 512,
         zoomOffset: -1,
