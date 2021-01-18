@@ -1,6 +1,8 @@
-function CL(message) {
-
+function cl(message) {
+    return console.log(message);
 }
+
+_id = function(id){return document.getElementById(id);};
 
 
 //https://nominatim.openstreetmap.org/search?q=17+Strada+Pictor+Alexandru+Romano%2C+Bukarest&format=geojson
@@ -9,7 +11,7 @@ function CL(message) {
 var inputAdresse = document.querySelector('#inputAdresse');
 var datalistInputAdresse = document.querySelector('#datalistInputAdresse');
 var zoneAlert = document.getElementsByClassName('zoneAlert')[0];
-let zoneAffichageCarte = document.getElementById('map');
+let zoneAffichageCarte = document.getElementsByClassName('map-container')[0];
 hiddenInput = document.getElementById(document.querySelector('#inputAdresse').getAttribute('id') + '-hidden'),
 
 
@@ -188,6 +190,16 @@ function showStations(lat_NE, lon_NE, lat_SW, lon_SW) {
 }
 
 function showMap(lon, lat) {
+
+        //Je supprime la carte précendente
+        let main = _id('main-container');
+        main.removeChild(_id('map'));
+
+        //Et en créé une nouvelle carte avec les informations mises a jour
+        let map = document.createElement('div');
+        map.setAttribute('id', 'map');
+        main.appendChild(map);
+
         //Affichage de la carte
         let mymap = L.map('map', { zoomControl: true }).setView([lon, lat], 13);
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
