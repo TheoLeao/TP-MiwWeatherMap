@@ -27,7 +27,7 @@ document.querySelector('#inputAdresse').addEventListener('change', function () {
     lon = parseFloat(tabCoordonnees[0]);
     lat = parseFloat(tabCoordonnees[1]);
     //Afficher la carte
-    showMap(lon, lat);
+    showMap(lon, lat, 10);
 
     //Récuperer les extrémités de la carte
     NE_lat = mymap.getBounds()._northEast.lat;
@@ -216,8 +216,7 @@ function showStations(NE_lat, NE_lng, SW_lat, SW_lng) {
         .catch(error => console.log('error netatmo', error));
 }
 
-function showMap(lon, lat) {
-
+function showMap(lon, lat, zoom) {
     //Je supprime la carte précendente
     let main = _id('main-container');
     main.removeChild(_id('map'));
@@ -228,7 +227,7 @@ function showMap(lon, lat) {
     main.appendChild(map);
 
     //Affichage de la carte
-    mymap = L.map('map', { zoomControl: true }).setView([lon, lat], 10);
+    mymap = L.map('map', { zoomControl: true }).setView([lon, lat], zoom);
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
         minZoom: 4,
