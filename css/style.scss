@@ -18,9 +18,14 @@
     @include flex-column-verticalHorizontalCenter;
     display:flex;
     flex-direction: column;
+    justify-content: space-between;
     align-items: center;
 }
 .useful-width {
     width: 100%;
     max-width: $useful-width;
+}
+
+body{
+    font-family: "Product Sans";
 }

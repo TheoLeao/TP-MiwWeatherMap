@@ -21,18 +21,18 @@
         <!-- Conteneur marges minimum -->
         <div class="margin-constraint">
             <!-- Conteneur largeur utile contenu -->
+            <span class="zoneAlert"></span>
             <div class="recherche">
-                <h1>TP - MIWWeatherMap</h1>
+                <div class="searchbar">
+                    <input type="text" id="inputAdresse" placeholder="Entre une adresse" list="datalistInputAdresse">
+                    <a href="">
+                        <img src="img/loupe.png">
+                    </a>
+                </div>
+                <datalist id="datalistInputAdresse">
 
-
-                <input type="text" id="inputAdresse" placeholder="Entre une adresse" list="datalistInputAdresse">
-                <span class="zoneAlert">
-                    
-                </span>
-                    <datalist id="datalistInputAdresse">
-
-                    </datalist>
-                    <input type="hidden" name="answer" id="inputAdresse-hidden">
+                </datalist>
+                <input type="hidden" name="answer" id="inputAdresse-hidden">
             </div>
             <div id="map">
 

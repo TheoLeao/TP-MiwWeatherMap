@@ -20,7 +20,7 @@ let zoneAffichageCarte = document.getElementById('map');
 hiddenInput = document.getElementById(document.querySelector('#inputAdresse').getAttribute('id') + '-hidden'),
 
 //Ecouteurs d'evenements
-    document.querySelector('#inputAdresse').addEventListener('input', function () { autocompletionInput(inputAdresse, datalistInputAdresse, zoneAlert, 'https://nominatim.openstreetmap.org/search', { 'street': inputAdresse.value, 'country': 'France', format : 'json'}) })
+document.querySelector('#inputAdresse').addEventListener('input', function () { autocompletionInput(inputAdresse, datalistInputAdresse, zoneAlert, 'https://nominatim.openstreetmap.org/search', { 'street': inputAdresse.value, 'country': 'France', format : 'json'}) })
 document.querySelector('#inputAdresse').addEventListener('change', function (){
     tabCoordonnees = hiddenInput.value.split(',');
     lon = parseFloat(tabCoordonnees[0]);
@@ -87,9 +87,9 @@ function autocompletionInput(nodeInput, nodeDatalist, nodeAlert, urlReq, paramsR
             })
             .catch((req) => {
                 //Affichage de l'erreur récupération BDD
-                document.getElementsByClassName('zoneAlert')[0].innerHTML = '';
+                zoneAlert.innerHTML = '';
                 //Afficher le message d'erreur
-                document.getElementsByClassName('zoneAlert')[0].innerHTML += `
+                zoneAlert.innerHTML += `
                 <div class="alert alert-danger" role="alert">
                     Suite à un soucis technique l'autocomplétion n'est pas disponible. Veuillez entrer le nom de la ville puis de valider.
                 </div>`;
