@@ -172,16 +172,6 @@ function showStations(lat_NE, lon_NE, lat_SW, lon_SW) {
                     //Exemple récupération coordonnées d'une borne
                     lat = data.body[0].place.location[0];
                     lon = data.body[0].place.location[1];
-<<<<<<< HEAD
-
-                    console.log(data.body[0]);
-                    console.log(JSON.stringify(data.body[1]));
-                    //Faire une boucle et afficher chaque bornes sur la map grâce à lat et lon
-
-
-
-
-=======
                     console.log(lat);
                     console.log(lon)
 
@@ -194,7 +184,6 @@ function showStations(lat_NE, lon_NE, lat_SW, lon_SW) {
 
                     }
 
->>>>>>> main
                     //Traitement des données bornes météos
 
 
@@ -206,10 +195,6 @@ function showStations(lat_NE, lon_NE, lat_SW, lon_SW) {
 }
 
 function showMap(lon, lat) {
-<<<<<<< HEAD
-    //Affichage de la carte
-    let mymap = L.map('map', { zoomControl: true }).setView([lon, lat], 13);
-=======
 
     //Je supprime la carte précendente
     let main = _id('main-container');
@@ -222,7 +207,6 @@ function showMap(lon, lat) {
 
     //Affichage de la carte
     mymap = L.map('map', { zoomControl: true }).setView([lon, lat], 13);
->>>>>>> main
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
         maxZoom: 12,
