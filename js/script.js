@@ -32,7 +32,7 @@ document.querySelector('#inputAdresse').addEventListener('change', function () {
     SW_lat = mymap.getBounds()._southWest.lat;
     SW_lng = mymap.getBounds()._southWest.lng;
     console.log(mymap.getBounds())
-    console.log('NE_lat: '+NE_lat+'NE_lng: '+NE_lng+'SW_lat: '+SW_lat+'SW_lng: '+SW_lng);
+    console.log('NE_lat: ' + NE_lat + 'NE_lng: ' + NE_lng + 'SW_lat: ' + SW_lat + 'SW_lng: ' + SW_lng);
 
     showStations(NE_lat, NE_lng, SW_lat, SW_lng);
 
@@ -183,14 +183,17 @@ function showStations(NE_lat, NE_lng, SW_lat, SW_lng) {
                     //console.log(lat);
                     //console.log(lon)
                     console.log(data.body[0].place)
+                    var markers = L.markerClusterGroup();
                     for (let i = 0; i < data.body.length; i++) {
 
                         lat = data.body[i].place.location[0];
                         lon = data.body[i].place.location[1];
 
-                        L.marker([lon, lat]).addTo(mymap); //Ajout du marqueur
+                        markers.addLayer(L.marker([lon, lat]));
+
 
                     }
+                    mymap.addLayer(markers);
 
                     //Traitement des données bornes météos
 
@@ -214,7 +217,7 @@ function showMap(lon, lat) {
     main.appendChild(map);
 
     //Affichage de la carte
-    mymap = L.map('map', { zoomControl: true }).setView([lon, lat], 13);
+    mymap = L.map('map', { zoomControl: true }).setView([lon, lat], 10);
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
         maxZoom: 8,
