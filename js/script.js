@@ -23,11 +23,8 @@ document.querySelector('#inputAdresse').addEventListener('change', function () {
     tabCoordonnees = hiddenInput.value.split(',');
     lon = parseFloat(tabCoordonnees[0]);
     lat = parseFloat(tabCoordonnees[1]);
-    showMap(lon, lat).then(() => {
-        //console.log(showStations(48.5833, 7.75, 44.8333, -0.5667));
-        //alert('show map ok');
-        console.log('ok');
-    }, () => { console.log('probleme affichage') });
+    showMap(lon, lat);
+    showStations(48.5833, 7.75, 44.8333, -0.5667);
 
 })
 //Stocker la valeur de l'option selectionné dans la hiddenInput pour la recuperer au input
@@ -169,18 +166,19 @@ function showStations(lat_NE, lon_NE, lat_SW, lon_SW) {
             //Récupération des données NetATMO
             fetch(`https://api.netatmo.com/api/getpublicdata?lat_ne=${lat_NE}&lon_ne=${lon_NE}&lat_sw=${lat_SW}&lon_sw=${lon_SW}&filter=false`, requestOptions)
                 .then(response => response.text())
-                .then(result => console.log(JSON.parse(result)))
+                .then(result => {
+                    dataBornes = JSON.parse(result)
+
+                    //Traitement des données bornes météos
+                    
+                })
                 .catch(error => console.log('error', error));
 
         })
         .catch(error => console.log('error netatmo', error));
-
-
 }
 
-
 function showMap(lon, lat) {
-    return new Promise((successCallback, failureCallback) => {
         //Affichage de la carte
         let mymap = L.map('map', { zoomControl: true }).setView([lon, lat], 13);
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -191,10 +189,5 @@ function showMap(lon, lat) {
             zoomOffset: -1,
             accessToken: 'pk.eyJ1IjoidGhlb2xlYW8iLCJhIjoiY2tpZG91MDJzMWw2MDJ4bzVianp6cXBsaCJ9.ps_BFy88xj0l6kMkf9ivgA'
         }).addTo(mymap);
-    })
 }
-
-console.log(showStations(48.5833, 7.75, 44.8333, -0.5667));
-
-
-alert('test');
+//alert('test');
