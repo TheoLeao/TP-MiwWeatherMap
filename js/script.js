@@ -171,12 +171,14 @@ function showStations(lat_NE, lon_NE, lat_SW, lon_SW) {
                     //Exemple récupération coordonnées d'une borne
                     lat = data.body[0].place.location[0];
                     lon = data.body[0].place.location[1];
-                    
-                    //Faire une boucle et afficher chaque bornes sur la map grâce à lat et lon
-                
-                   
 
-                    
+                    console.log(data.body[0]);
+                    console.log(JSON.stringify(data.body[1]));
+                    //Faire une boucle et afficher chaque bornes sur la map grâce à lat et lon
+
+
+
+
                     //Traitement des données bornes météos
 
 
@@ -188,15 +190,15 @@ function showStations(lat_NE, lon_NE, lat_SW, lon_SW) {
 }
 
 function showMap(lon, lat) {
-        //Affichage de la carte
-        let mymap = L.map('map', { zoomControl: true }).setView([lon, lat], 13);
-        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-            maxZoom: 12,
-            id: 'mapbox/streets-v11',
-            tileSize: 512,
-            zoomOffset: -1,
-            accessToken: 'pk.eyJ1IjoidGhlb2xlYW8iLCJhIjoiY2tpZG91MDJzMWw2MDJ4bzVianp6cXBsaCJ9.ps_BFy88xj0l6kMkf9ivgA'
-        }).addTo(mymap);
+    //Affichage de la carte
+    let mymap = L.map('map', { zoomControl: true }).setView([lon, lat], 13);
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 12,
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1,
+        accessToken: 'pk.eyJ1IjoidGhlb2xlYW8iLCJhIjoiY2tpZG91MDJzMWw2MDJ4bzVianp6cXBsaCJ9.ps_BFy88xj0l6kMkf9ivgA'
+    }).addTo(mymap);
 }
 //alert('test');
