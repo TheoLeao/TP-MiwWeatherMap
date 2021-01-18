@@ -167,10 +167,19 @@ function showStations(lat_NE, lon_NE, lat_SW, lon_SW) {
             fetch(`https://api.netatmo.com/api/getpublicdata?lat_ne=${lat_NE}&lon_ne=${lon_NE}&lat_sw=${lat_SW}&lon_sw=${lon_SW}&filter=false`, requestOptions)
                 .then(response => response.text())
                 .then(result => {
-                    dataBornes = JSON.parse(result)
-
-                    //Traitement des données bornes météos
+                    data = JSON.parse(result)
+                    //Exemple récupération coordonnées d'une borne
+                    lat = data.body[0].place.location[0];
+                    lon = data.body[0].place.location[1];
                     
+                    //Faire une boucle et afficher chaque bornes sur la map grâce à lat et lon
+                
+                   
+
+                    
+                    //Traitement des données bornes météos
+
+
                 })
                 .catch(error => console.log('error', error));
 
