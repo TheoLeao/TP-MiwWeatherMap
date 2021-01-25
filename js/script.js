@@ -184,23 +184,31 @@ function showStations(NE_lat, NE_lng, SW_lat, SW_lng) {
             };
 
             //Récupération des données NetATMO
-            fetch(`https://api.netatmo.com/api/getpublicdata?lat_ne=${NE_lat}&lon_ne=${NE_lng}&lat_sw=${SW_lat}&lon_sw=${SW_lng}&filter=false`, requestOptions)
+            fetch(`https://api.netatmo.com/api/getpublicmeasures?lat_ne=${NE_lat}&lon_ne=${NE_lng}&lat_sw=${SW_lat}&lon_sw=${SW_lng}&filter=false`, requestOptions)
                 .then(response => response.text())
                 .then(result => {
                     data = JSON.parse(result)
                     //Exemple récupération coordonnées d'une borne
                     lat = data.body[0].place.location[0];
                     lon = data.body[0].place.location[1];
-                    //console.log(lat);
-                    //console.log(lon)
-                    console.log(data.body[0].place)
+
                     var markers = L.markerClusterGroup();
                     for (let i = 0; i < data.body.length; i++) {
+
+                        let clefMesure = Object.keys(data.body[i].measures);
+                        let clefValeur = Object.keys(data.body[i].measures[clefMesure[0]].res);
+
+                        let temperature = data.body[i].measures[clefMesure[0]].res[clefValeur[0]][0];
+                        let humidity = data.body[i].measures[clefMesure[0]].res[clefValeur[0]][0];
 
                         lat = data.body[i].place.location[0];
                         lon = data.body[i].place.location[1];
 
-                        let marker = L.marker([lon, lat]).bindPopup("hello");
+                        let marker = L.marker([lon, lat]).bindPopup(
+                            'Température: '+temperature+'<br>'+
+                            'Humidité: '+humidity
+                        );
+
                         marker.addTo(markers);
 
                     }
