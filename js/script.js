@@ -36,10 +36,12 @@ document.querySelector('#inputAdresse').addEventListener('change', function () {
     SW_lng = mymap.getBounds()._southWest.lng;
 
     //Dessiner la diagonale pour vérifier si les valeurs sont correct
+    /*
     var polygon = L.polygon([
         [NE_lat, NE_lng],
         [SW_lat, SW_lng]
     ]).addTo(mymap);
+    */
 
 
     console.log(mymap.getBounds())
