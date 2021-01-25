@@ -194,18 +194,20 @@ function showStations(NE_lat, NE_lng, SW_lat, SW_lng) {
                     //console.log(lat);
                     //console.log(lon)
                     console.log(data.body[0].place)
-                    var markers = L.markerClusterGroup();
-                    for (let i = 0; i < data.body.length; i++) {
+                    //var markers = L.markerClusterGroup();
+                    for (let i = 0; i < 1; i++) {
 
                         lat = data.body[i].place.location[0];
                         lon = data.body[i].place.location[1];
 
-                        let marker = L.marker([lon, lat]).bindPopup('this is a popup');
-                        markers.addLayer(marker);
+                        let marker = L.marker([lon, lat]);
+                        marker.addTo(mymap);
+
+                        console.log(marker);
 
 
                     }
-                    mymap.addLayer(markers);
+                    //markers.addTo(mymap);
 
                     //Traitement des données bornes météos
 
@@ -238,5 +240,6 @@ function showMap(lon, lat, zoom) {
         zoomOffset: -1,
         accessToken: 'pk.eyJ1IjoidGhlb2xlYW8iLCJhIjoiY2tpZG91MDJzMWw2MDJ4bzVianp6cXBsaCJ9.ps_BFy88xj0l6kMkf9ivgA'
     }).addTo(mymap);
+
 }
 //alert('test');
