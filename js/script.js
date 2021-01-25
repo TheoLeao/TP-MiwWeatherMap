@@ -198,17 +198,19 @@ function showStations(NE_lat, NE_lng, SW_lat, SW_lng) {
                     for (let i = 0; i < data.body.length; i++) {
 
                         let clefMesure = Object.keys(data.body[i].measures);
-                        let clefValeur = Object.keys(data.body[i].measures[clefMesure[0]].res);
+                        function clefValeur(x){return Object.keys(data.body[i].measures[clefMesure[x]].res)};
 
-                        let temperature = data.body[i].measures[clefMesure[0]].res[clefValeur[0]][0];
-                        let humidity = data.body[i].measures[clefMesure[0]].res[clefValeur[0]][0];
+                        let temperature = data.body[i].measures[clefMesure[0]].res[clefValeur(0)[0]][0];
+                        let humidity = data.body[i].measures[clefMesure[0]].res[clefValeur(0)[0]][1];
+                        let pression = data.body[i].measures[clefMesure[1]].res[clefValeur(1)][0];
 
                         lat = data.body[i].place.location[0];
                         lon = data.body[i].place.location[1];
 
                         let marker = L.marker([lon, lat]).bindPopup(
-                            'Température: '+temperature+'<br>'+
-                            'Humidité: '+humidity
+                            'Température: '+temperature+'°C<br>'+
+                            'Humidité: '+humidity+'g/m<sup>3</sup><br>'+
+                            'Pression: '+pression+'Pa'
                         );
 
                         marker.addTo(markers);

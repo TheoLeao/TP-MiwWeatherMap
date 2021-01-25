@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e295a72b-d9fc-4f74-8a7f-f3d64288d150" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/script.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -14,6 +15,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="PackageJsonUpdateNotifier">
+    <dismissed value="$PROJECT_DIR$/package.json" />
   </component>
   <component name="ProjectId" id="1nFG614vNhUkyZ2NEGLqNjJ6XJu" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -37,6 +41,7 @@
       <option name="presentableId" value="Default" />
       <updated>1610978245910</updated>
       <workItem from="1610978246953" duration="5521000" />
+      <workItem from="1611590684453" duration="246000" />
     </task>
     <servers />
   </component>
