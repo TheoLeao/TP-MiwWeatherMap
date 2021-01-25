@@ -194,20 +194,17 @@ function showStations(NE_lat, NE_lng, SW_lat, SW_lng) {
                     //console.log(lat);
                     //console.log(lon)
                     console.log(data.body[0].place)
-                    //var markers = L.markerClusterGroup();
-                    for (let i = 0; i < 1; i++) {
+                    var markers = L.markerClusterGroup();
+                    for (let i = 0; i < data.body.length; i++) {
 
                         lat = data.body[i].place.location[0];
                         lon = data.body[i].place.location[1];
 
-                        let marker = L.marker([lon, lat]);
-                        marker.addTo(mymap);
-
-                        console.log(marker);
-
+                        let marker = L.marker([lon, lat]).bindPopup("hello");
+                        marker.addTo(markers);
 
                     }
-                    //markers.addTo(mymap);
+                    markers.addTo(mymap);
 
                     //Traitement des données bornes météos
 
