@@ -200,7 +200,8 @@ function showStations(NE_lat, NE_lng, SW_lat, SW_lng) {
                         lat = data.body[i].place.location[0];
                         lon = data.body[i].place.location[1];
 
-                        markers.addLayer(L.marker([lon, lat]));
+                        let marker = L.marker([lon, lat]).bindPopup('this is a popup');
+                        markers.addLayer(marker);
 
 
                     }
