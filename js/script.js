@@ -250,5 +250,14 @@ function showMap(lon, lat, zoom) {
         accessToken: 'pk.eyJ1IjoidGhlb2xlYW8iLCJhIjoiY2tpZG91MDJzMWw2MDJ4bzVianp6cXBsaCJ9.ps_BFy88xj0l6kMkf9ivgA'
     }).addTo(mymap);
 
+    mymap.addEventListener('mouseup', function(ev) {
+        let newLat = ev.latlng.lat;
+        let newLng = ev.latlng.lng;
+
+        console.log(newLat, newLng);
+    });
+
+    mymap.on('zoomend',function(e) {
+        console.log(e.target.getZoom());
+    })
 }
-mymap.addEventListeners
