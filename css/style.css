@@ -474,6 +474,9 @@ body {
   .leaflet-control-container {
     display: none;
   }
+  #map {
+    position: absolute;
+  }
 }
 
 .container {
