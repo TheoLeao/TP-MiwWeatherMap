@@ -433,6 +433,20 @@ body {
   text-align: center;
 }
 
+.info {
+  position: absolute;
+  left: 45px;
+  padding: 7px;
+  background: white;
+  border-radius: 5px;
+  z-index: 500;
+}
+
+.info p {
+  display: inline-block;
+  margin: 0;
+}
+
 .searchbar {
   display: -ms-flexbox;
   display: flex;
@@ -461,6 +475,12 @@ body {
   width: 5%;
 }
 
+@media (min-width: 992px) {
+  .info {
+    top: 120px;
+  }
+}
+
 @media (max-width: 576px) {
   .recherche {
     position: relative;
@@ -475,7 +495,16 @@ body {
     display: none;
   }
   #map {
-    position: absolute;
+    position: absolute !important;
+  }
+  .info {
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    height: 75px;
+    line-height: 65px;
+    border-radius: 0;
+    text-align: center;
   }
 }
 
