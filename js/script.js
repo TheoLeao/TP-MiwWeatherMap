@@ -1,26 +1,33 @@
-function cl(message) {
-    return console.log(message);
-}
 
-_id = function (id) { return document.getElementById(id); };
-
-
-//https://nominatim.openstreetmap.org/search?q=17+Strada+Pictor+Alexandru+Romano%2C+Bukarest&format=geojson
+_id=function(id){return document.getElementById(id);};
 
 //Déclaration des variables
+
 var mymap;
+var moyTemp = _id('moyTemp');
 var inputAdresse = document.querySelector('#inputAdresse');
 var datalistInputAdresse = document.querySelector('#datalistInputAdresse');
 var zoneAlert = document.getElementsByClassName('zoneAlert')[0];
 let zoneAffichageCarte = document.getElementsByClassName('map-container')[0];
-hiddenInput = document.getElementById(document.querySelector('#inputAdresse').getAttribute('id') + '-hidden'),
+hiddenInput = _id(document.querySelector('#inputAdresse').getAttribute('id') + '-hidden');
 
+/* ---- Ecouteurs d'evenements ---- */
 
-    //Ecouteurs d'evenements
-    window.addEventListener("load", function (event) {
+//Ecoute sur la barre de recherche - requete
+document.querySelector('#inputAdresse').addEventListener('input', function () {
+    autocompletionInput(
+        inputAdresse,
+        datalistInputAdresse,
+        zoneAlert,
+        'https://nominatim.openstreetmap.org/search',
+        {
+            'street': inputAdresse.value,
+            'country': 'France',
+            format: 'json'
+        })
+})
 
-    });
-document.querySelector('#inputAdresse').addEventListener('input', function () { autocompletionInput(inputAdresse, datalistInputAdresse, zoneAlert, 'https://nominatim.openstreetmap.org/search', { 'street': inputAdresse.value, 'country': 'France', format: 'json' }) })
+//Ecoute sur la barre de recherche - changement
 document.querySelector('#inputAdresse').addEventListener('change', function () {
 
     tabCoordonnees = hiddenInput.value.split(',');
@@ -36,21 +43,13 @@ document.querySelector('#inputAdresse').addEventListener('change', function () {
     SW_lat = mymap.getBounds()._southWest.lat;
     SW_lng = mymap.getBounds()._southWest.lng;
 
-    //Dessiner la diagonale pour vérifier si les valeurs sont correct
-    /*
-    var polygon = L.polygon([
-        [NE_lat, NE_lng],
-        [SW_lat, SW_lng]
-    ]).addTo(mymap);
-    */
-
-
     console.log(mymap.getBounds())
     console.log('NE_lat: ' + NE_lat + 'NE_lng: ' + NE_lng + 'SW_lat: ' + SW_lat + 'SW_lng: ' + SW_lng);
 
     showStations(NE_lat, NE_lng, SW_lat, SW_lng);
 
 })
+
 //Stocker la valeur de l'option selectionné dans la hiddenInput pour la recuperer au input
 document.querySelector('input[list]').addEventListener('input', function (e) {
     var input = e.target,
@@ -71,6 +70,8 @@ document.querySelector('input[list]').addEventListener('input', function (e) {
         }
     }
 });
+
+/* ---- Fonctinnement de l'application  ---- */
 
 function autocompletionInput(nodeInput, nodeDatalist, nodeAlert, urlReq, paramsReq,) {
     //Vider la zone d'alert
@@ -139,6 +140,8 @@ function showStations(NE_lat, NE_lng, SW_lat, SW_lng) {
         redirect: 'follow'
     };
 
+    var moyenne = 0;
+
     fetch("https://api.netatmo.com/oauth2/token", requestOptions)
         .then(response => response.text())
         //.then(result => console.log(JSON.parse(result).access_token))
@@ -187,9 +190,12 @@ function showStations(NE_lat, NE_lng, SW_lat, SW_lng) {
                         );
 
                         marker.addTo(markers);
+                        moyenne += temperature;
 
                     }
                     markers.addTo(mymap);
+                    moyTemp.textContent = (moyenne/data.body.length).toFixed(2).toString();
+                    moyTemp.textContent += "°C";
                     console.log('showMeteo executé')
                     //Traitement des données bornes météos
 
@@ -198,6 +204,7 @@ function showStations(NE_lat, NE_lng, SW_lat, SW_lng) {
         })
         .catch(error => console.log('error netatmo token', error));
 }
+
 function showMap(lon, lat, zoom) {
     //Je supprime la carte précendente
     let main = _id('main-container');
@@ -226,17 +233,7 @@ function showMap(lon, lat, zoom) {
         SW_lat = mymap.getBounds()._southWest.lat;
         SW_lng = mymap.getBounds()._southWest.lng;
         showStations(NE_lat, NE_lng, SW_lat, SW_lng)
-        //console.log(`NE_lat: ${NE_lat} | NE_lng: ${NE_lng} | SV_lat: ${SW_lat} | SW_lng: ${SW_lng}`);
-        /*L.polygon([
-            [NE_lat, NE_lng],
-            [SW_lat, SW_lng]
-        ]).addTo(mymap);*/
 
-        //Récupération des données NetATMO
-
-
-
-        //console.log(newLat, newLng);
     });
     mymap.addEventListener('move', function (e){
         console.log('move');
@@ -252,3 +249,4 @@ function showMap(lon, lat, zoom) {
 
     })
 }
+
