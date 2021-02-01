@@ -28,6 +28,7 @@ document.querySelector('#inputAdresse').addEventListener('change', function () {
     lat = parseFloat(tabCoordonnees[1]);
     //Afficher la carte
     showMap(lon, lat, 13);
+    map.locate({setView: true, maxZoom: 16});
 
     //Récuperer les extrémités de la carte
     NE_lat = mymap.getBounds()._northEast.lat;
@@ -120,34 +121,6 @@ function autocompletionInput(nodeInput, nodeDatalist, nodeAlert, urlReq, paramsR
     }
 }
 
-/*Récupération du accessToken
-function getAccessToken_NetatmoApi() {
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-
-    var urlencoded = new URLSearchParams();
-    urlencoded.append("grant_type", "refresh_token");
-    urlencoded.append("refresh_token", "5ffc5befccb0da524b20861c|20832aa7e0dfa5873598919b947e62a1");
-    urlencoded.append("client_id", "5ffc5c2cbd10c6698151b1cf");
-    urlencoded.append("client_secret", "NfDkkPDA6qEiQ25HwOHqsIvsOCybFhL5GgBOTF8");
-
-    var requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: urlencoded,
-        redirect: 'follow'
-    };
-
-    fetch("https://api.netatmo.com/oauth2/token", requestOptions)
-        .then(response => response.text())
-        //.then(result => console.log(JSON.parse(result).access_token))
-        .then(function (result) {
-            const token = JSON.parse(result).access_token;
-
-        })
-        .catch(error => console.log('error', error));
-}*/
-
 function showStations(NE_lat, NE_lng, SW_lat, SW_lng) {
     //Récupération du refresh_token
     var myHeaders = new Headers();
@@ -220,10 +193,8 @@ function showStations(NE_lat, NE_lng, SW_lat, SW_lng) {
                     console.log('showMeteo executé')
                     //Traitement des données bornes météos
 
-
                 })
                 .catch(error => console.log('error récupération données bornes', error));
-
         })
         .catch(error => console.log('error netatmo token', error));
 }
@@ -242,7 +213,7 @@ function showMap(lon, lat, zoom) {
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
         minZoom: 4,
-        maxZoom: 20,
+        maxZoom: 12,
         id: 'mapbox/streets-v11',
         tileSize: 512,
         zoomOffset: -1,
@@ -266,6 +237,9 @@ function showMap(lon, lat, zoom) {
 
 
         //console.log(newLat, newLng);
+    });
+    mymap.addEventListener('move', function (e){
+        console.log('move');
     });
 
     mymap.on('zoomend', function (e) {
