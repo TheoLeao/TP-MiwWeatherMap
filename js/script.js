@@ -198,7 +198,7 @@ function showStations(NE_lat, NE_lng, SW_lat, SW_lng) {
                     for (let i = 0; i < data.body.length; i++) {
 
                         let clefMesure = Object.keys(data.body[i].measures);
-                        function clefValeur(x){return Object.keys(data.body[i].measures[clefMesure[x]].res)};
+                        function clefValeur(x) { return Object.keys(data.body[i].measures[clefMesure[x]].res) };
 
                         let temperature = data.body[i].measures[clefMesure[0]].res[clefValeur(0)[0]][0];
                         let humidity = data.body[i].measures[clefMesure[0]].res[clefValeur(0)[0]][1];
@@ -208,26 +208,25 @@ function showStations(NE_lat, NE_lng, SW_lat, SW_lng) {
                         lon = data.body[i].place.location[1];
 
                         let marker = L.marker([lon, lat]).bindPopup(
-                            'Température: '+temperature+'°C<br>'+
-                            'Humidité: '+humidity+'g/m<sup>3</sup><br>'+
-                            'Pression: '+pression+'Pa'
+                            'Température: ' + temperature + '°C<br>' +
+                            'Humidité: ' + humidity + 'g/m<sup>3</sup><br>' +
+                            'Pression: ' + pression + 'Pa'
                         );
 
                         marker.addTo(markers);
 
                     }
                     markers.addTo(mymap);
-
+                    console.log('showMeteo executé')
                     //Traitement des données bornes météos
 
 
                 })
-                .catch(error => console.log('error', error));
+                .catch(error => console.log('error récupération données bornes', error));
 
         })
-        .catch(error => console.log('error netatmo', error));
+        .catch(error => console.log('error netatmo token', error));
 }
-
 function showMap(lon, lat, zoom) {
     //Je supprime la carte précendente
     let main = _id('main-container');
@@ -250,14 +249,32 @@ function showMap(lon, lat, zoom) {
         accessToken: 'pk.eyJ1IjoidGhlb2xlYW8iLCJhIjoiY2tpZG91MDJzMWw2MDJ4bzVianp6cXBsaCJ9.ps_BFy88xj0l6kMkf9ivgA'
     }).addTo(mymap);
 
-    mymap.addEventListener('mouseup', function(ev) {
-        let newLat = ev.latlng.lat;
-        let newLng = ev.latlng.lng;
+    mymap.addEventListener('mouseup', function (ev) {
+        NE_lat = mymap.getBounds()._northEast.lat;
+        NE_lng = mymap.getBounds()._northEast.lng;
+        SW_lat = mymap.getBounds()._southWest.lat;
+        SW_lng = mymap.getBounds()._southWest.lng;
+        showStations(NE_lat, NE_lng, SW_lat, SW_lng)
+        //console.log(`NE_lat: ${NE_lat} | NE_lng: ${NE_lng} | SV_lat: ${SW_lat} | SW_lng: ${SW_lng}`);
+        /*L.polygon([
+            [NE_lat, NE_lng],
+            [SW_lat, SW_lng]
+        ]).addTo(mymap);*/
 
-        console.log(newLat, newLng);
+        //Récupération des données NetATMO
+
+
+
+        //console.log(newLat, newLng);
     });
 
-    mymap.on('zoomend',function(e) {
-        console.log(e.target.getZoom());
+    mymap.on('zoomend', function (e) {
+        //console.log(e.target.getZoom());
+        NE_lat = mymap.getBounds()._northEast.lat;
+        NE_lng = mymap.getBounds()._northEast.lng;
+        SW_lat = mymap.getBounds()._southWest.lat;
+        SW_lng = mymap.getBounds()._southWest.lng;
+        showStations(NE_lat, NE_lng, SW_lat, SW_lng)
+
     })
 }
