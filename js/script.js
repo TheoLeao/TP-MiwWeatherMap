@@ -217,7 +217,7 @@ function showStations(NE_lat, NE_lng, SW_lat, SW_lng) {
 
                     }
                     markers.addTo(mymap);
-
+                    console.log('showMeteo executé')
                     //Traitement des données bornes météos
 
 
@@ -227,7 +227,6 @@ function showStations(NE_lat, NE_lng, SW_lat, SW_lng) {
         })
         .catch(error => console.log('error netatmo token', error));
 }
-
 function showMap(lon, lat, zoom) {
     //Je supprime la carte précendente
     let main = _id('main-container');
@@ -251,24 +250,31 @@ function showMap(lon, lat, zoom) {
     }).addTo(mymap);
 
     mymap.addEventListener('mouseup', function (ev) {
-        let newLat = ev.latlng.lat;
-        let newLng = ev.latlng.lng;
         NE_lat = mymap.getBounds()._northEast.lat;
         NE_lng = mymap.getBounds()._northEast.lng;
         SW_lat = mymap.getBounds()._southWest.lat;
         SW_lng = mymap.getBounds()._southWest.lng;
-
-        console.log(`NE_lat: ${NE_lat} | NE_lng: ${NE_lng} | SV_lat: ${SW_lat} | SW_lng: ${SW_lng}`);
-        L.polygon([
+        showStations(NE_lat, NE_lng, SW_lat, SW_lng)
+        //console.log(`NE_lat: ${NE_lat} | NE_lng: ${NE_lng} | SV_lat: ${SW_lat} | SW_lng: ${SW_lng}`);
+        /*L.polygon([
             [NE_lat, NE_lng],
             [SW_lat, SW_lng]
-        ]).addTo(mymap);
+        ]).addTo(mymap);*/
 
-    
+        //Récupération des données NetATMO
+
+
+
         //console.log(newLat, newLng);
     });
 
     mymap.on('zoomend', function (e) {
-        console.log(e.target.getZoom());
+        //console.log(e.target.getZoom());
+        NE_lat = mymap.getBounds()._northEast.lat;
+        NE_lng = mymap.getBounds()._northEast.lng;
+        SW_lat = mymap.getBounds()._southWest.lat;
+        SW_lng = mymap.getBounds()._southWest.lng;
+        showStations(NE_lat, NE_lng, SW_lat, SW_lng)
+
     })
 }
