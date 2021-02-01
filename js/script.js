@@ -27,7 +27,7 @@ document.querySelector('#inputAdresse').addEventListener('change', function () {
     lon = parseFloat(tabCoordonnees[0]);
     lat = parseFloat(tabCoordonnees[1]);
     //Afficher la carte
-    showMap(lon, lat, 10);
+    showMap(lon, lat, 13);
 
     //Récuperer les extrémités de la carte
     NE_lat = mymap.getBounds()._northEast.lat;

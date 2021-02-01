@@ -407,6 +407,10 @@ section {
 /* -- Desktop --*/
 /* --Mobile--*/
 /* --Epaisseur police --*/
+body {
+  background-color: #007bff;
+}
+
 #map {
   width: 100%;
   height: 100vh;
@@ -455,6 +459,21 @@ section {
 
 .searchbar a {
   width: 5%;
+}
+
+@media (max-width: 576px) {
+  .recherche {
+    position: relative;
+    width: 80%;
+    margin: auto;
+    display: block;
+    left: 0;
+    top: 75px;
+    box-shadow: 0 0 3px black;
+  }
+  .leaflet-control-container {
+    display: none;
+  }
 }
 
 .container {
