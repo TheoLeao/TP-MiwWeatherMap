@@ -27,7 +27,7 @@ document.querySelector('#inputAdresse').addEventListener('change', function () {
     lon = parseFloat(tabCoordonnees[0]);
     lat = parseFloat(tabCoordonnees[1]);
     //Afficher la carte
-    showMap(lon, lat, 10);
+    showMap(lon, lat, 13);
 
     //Récuperer les extrémités de la carte
     NE_lat = mymap.getBounds()._northEast.lat;
@@ -250,5 +250,14 @@ function showMap(lon, lat, zoom) {
         accessToken: 'pk.eyJ1IjoidGhlb2xlYW8iLCJhIjoiY2tpZG91MDJzMWw2MDJ4bzVianp6cXBsaCJ9.ps_BFy88xj0l6kMkf9ivgA'
     }).addTo(mymap);
 
+    mymap.addEventListener('mouseup', function(ev) {
+        let newLat = ev.latlng.lat;
+        let newLng = ev.latlng.lng;
+
+        console.log(newLat, newLng);
+    });
+
+    mymap.on('zoomend',function(e) {
+        console.log(e.target.getZoom());
+    })
 }
-mymap.addEventListeners
