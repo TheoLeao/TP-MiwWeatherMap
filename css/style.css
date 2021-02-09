@@ -421,6 +421,11 @@ body {
   top: 35px !important;
 }
 
+.zoneAlert {
+  color: white;
+  text-align: center;
+}
+
 .recherche {
   position: absolute;
   left: 45px;
